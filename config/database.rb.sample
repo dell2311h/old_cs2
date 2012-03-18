@@ -1,19 +1,25 @@
-##
-# A MySQL connection:
-# DataMapper.setup(:default, 'mysql://user:password@localhost/the_database_name')
-#
-# # A Postgres connection:
-# DataMapper.setup(:default, 'postgres://user:password@localhost/the_database_name')
-#
-# # A Sqlite3 connection
-# DataMapper.setup(:default, "sqlite3://" + Padrino.root('db', "development.db"))
-#
 
-DataMapper.logger = logger
-DataMapper::Property::String.length(255)
+# Connection.new takes host, port
+host = 'localhost'
+port = Mongo::Connection::DEFAULT_PORT
 
-case Padrino.env
-  when :development then DataMapper.setup(:default, "sqlite3://" + Padrino.root('db', "pandrino_development.db"))
-  when :production  then DataMapper.setup(:default, "sqlite3://" + Padrino.root('db', "pandrino_production.db"))
-  when :test        then DataMapper.setup(:default, "sqlite3://" + Padrino.root('db', "pandrino_test.db"))
+database_name = case Padrino.env
+  when :development then 'pandrino_development'
+  when :production  then 'pandrino_production'
+  when :test        then 'pandrino_test'
 end
+
+Mongoid.database = Mongo::Connection.new(host, port).db(database_name)
+
+# You can also configure Mongoid this way
+# Mongoid.configure do |config|
+#   name = @settings["database"]
+#   host = @settings["host"]
+#   config.master = Mongo::Connection.new.db(name)
+#   config.slaves = [
+#     Mongo::Connection.new(host, @settings["slave_one"]["port"], :slave_ok => true).db(name),
+#     Mongo::Connection.new(host, @settings["slave_two"]["port"], :slave_ok => true).db(name)
+#   ]
+# end
+#
+# More installation and setup notes are on http://mongoid.org/docs/

@@ -12,13 +12,8 @@ gem 'sinatra-flash', :require => 'sinatra/flash'
 gem 'rack-less'
 gem 'less'
 gem 'erubis', "~> 2.7.0"
-gem 'dm-sqlite-adapter'
-gem 'dm-validations'
-gem 'dm-timestamps'
-gem 'dm-migrations'
-gem 'dm-constraints'
-gem 'dm-aggregates'
-gem 'dm-core'
+gem 'mongoid'
+gem 'bson_ext', :require => "mongo"
 
 # Test requirements
 gem 'rspec', :group => "test"

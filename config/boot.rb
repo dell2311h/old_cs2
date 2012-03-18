@@ -24,7 +24,6 @@ end
 # Add your after load hooks here
 #
 Padrino.after_load do
-  DataMapper.finalize
 end
 
 Padrino.load!
