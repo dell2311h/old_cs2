@@ -62,6 +62,9 @@ GEM
       mail (~> 2.3.0)
       padrino-core (= 0.10.6)
     polyglot (0.3.3)
+    rabl (0.6.1)
+      activesupport (>= 2.3.14)
+      multi_json (~> 1.1.0)
     rack (1.4.1)
     rack-less (3.0.2)
       less (~> 2.0)
@@ -95,6 +98,7 @@ GEM
     tzinfo (0.3.32)
     url_mount (0.2.1)
       rack
+    yajl-ruby (1.1.0)
 
 PLATFORMS
   ruby
@@ -105,8 +109,10 @@ DEPENDENCIES
   less
   mongoid
   padrino (= 0.10.6)
+  rabl
   rack-less
   rack-test
   rake
   rspec
   sinatra-flash
+  yajl-ruby

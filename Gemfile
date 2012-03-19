@@ -14,6 +14,8 @@ gem 'less'
 gem 'erubis', "~> 2.7.0"
 gem 'mongoid'
 gem 'bson_ext', :require => "mongo"
+gem 'rabl'
+gem 'yajl-ruby'
 
 # Test requirements
 gem 'rspec', :group => "test"
