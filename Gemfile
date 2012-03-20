@@ -16,6 +16,7 @@ gem 'mongoid'
 gem 'bson_ext', :require => "mongo"
 gem 'rabl'
 gem 'yajl-ruby'
+gem 'rvideo', :git => 'git://github.com/applicaster/rvideo.git'
 
 # Test requirements
 gem 'rspec', :group => "test"

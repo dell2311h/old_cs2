@@ -1,2 +1,5 @@
 object @media
-attributes :id, :source, :parent_id
+attributes :id
+node(:meta_info) do |n|
+  n.meta_info.attributes
+end
