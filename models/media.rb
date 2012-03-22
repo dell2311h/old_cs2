@@ -1,12 +1,12 @@
 class Media
   include Mongoid::Document
   include Mongoid::Timestamps # adds created_at and updated_at fields
-  field :source, :type => String, :default => ''
-  field :parent_id, :type => String, :default => ''
-  # field <name>, :type => <type>, :default => <value>
 
-  # You can define indexes on documents using the index macro:
-  # index :field <, :unique => true>
+  field :source, :type => String, :default => ''
+  field :origin_media_id, :type => String, :default => ''
+
+  has_many :encoding_medias, :class_name => 'Media', :inverse_of => :origin_media
+  belongs_to :origin_media, :class_name => 'Media', :inverse_of => :encoding_media
 
   embeds_one :meta_info
   after_create :add_meta_info
