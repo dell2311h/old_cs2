@@ -28,6 +28,7 @@
 Padrino.configure_apps do
   # enable :sessions
   set :session_secret, 'cbd0b8109a3f2df126ec1c46f5db46cf394cdbbc70a4901d57160b767c18ee4d'
+  set :encoded_media_path, '/path/to/encoded/media/directory'
 end
 
 # Mounts the core application for this project

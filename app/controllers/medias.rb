@@ -22,4 +22,14 @@ Pandrino.controllers :medias do
     render 'medias/show'
   end
 
+  post :encode, :map => "/medias/:id/encode" do
+    @media = Media.find(params[:id])
+    if params[:command] == 'demux'
+      @media.demux(:audio)
+      @media.demux(:video)
+    end
+    @media.reload
+    render 'medias/encoding_medias'
+  end
+
 end
