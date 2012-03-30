@@ -3,6 +3,7 @@ config/apps.rb
 *.komodoproject
 
 .DS_Store
+log/*.log
 log/**/*
 tmp/**/*
 bin/*

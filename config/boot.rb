@@ -8,6 +8,10 @@ require 'bundler/setup'
 Bundler.require(:default, PADRINO_ENV)
 
 ##
+# Enable resque's rake tasks
+require 'resque/tasks'
+
+##
 # Enable devel logging
 #
 # Padrino::Logger::Config[:development][:log_level]  = :devel
