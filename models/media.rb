@@ -22,6 +22,7 @@ class Media
     encoding = self.encoding_medias.find_or_create_by(:command => 'demux', :type => type)
     encoding.source = params[:output_file]
     encoding.save
+    encoding
     rescue Exception => e
       puts "Unable to transcode file: #{e.class} - #{e.message}"
   end

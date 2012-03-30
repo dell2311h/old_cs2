@@ -23,13 +23,15 @@ Pandrino.controllers :medias do
   end
 
   post :encode, :map => "/medias/:id/encode" do
-    @media = Media.find(params[:id])
-    if params[:command] == 'demux'
-      @media.demux(:audio)
-      @media.demux(:video)
+    case params[:command]
+    when 'demux'
+      Resque.enqueue(Encoder::Demux, params[:id], :audio)
+      Resque.enqueue(Encoder::Demux, params[:id], :video)
+      res = {:status => 'processing', :message => 'Media was added to demux queue.'}
+    else
+      res = {:status => 'failure', :message => 'Wrong command!'}
     end
-    @media.reload
-    render 'medias/encoding_medias'
+    render res
   end
 
 end
