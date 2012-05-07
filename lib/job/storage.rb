@@ -1,7 +1,5 @@
 class TempStorage
 
-  PROCESSING_DIR = Pandrino.encoded_media_path
-
   attr :encoding_id, :output_dir_name
 
   def initialize encoding_id, output_dir_name = nil
@@ -11,7 +9,7 @@ class TempStorage
   end
 
   def encoding_dir_fullpath
-    "#{PROCESSING_DIR}/#{self.encoding_id}"
+    "#{Pandrino.encoded_media_path}/#{self.encoding_id}"
   end
 
   def output_dir_fullpath
@@ -21,7 +19,7 @@ class TempStorage
   private
 
     def make_output_dir!
-      Dir.mkdir(PROCESSING_DIR) unless File.directory? PROCESSING_DIR
+      Dir.mkdir(Pandrino.encoded_media_path) unless File.directory? Pandrino.encoded_media_path
       Dir.mkdir(self.encoding_dir_fullpath) unless File.directory? self.encoding_dir_fullpath
       Dir.mkdir(self.output_dir_fullpath) unless File.directory? self.output_dir_fullpath if output_dir_name
     end

@@ -1,9 +1,7 @@
 class Conveyor
-
+  @queue = :conveyor
   @@jobs_results = {}
-
   @@create_medias_for_jobs = []
-
   @@new_medias = []
 
   class << self

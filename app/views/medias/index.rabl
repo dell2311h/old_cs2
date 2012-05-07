@@ -1,2 +1,2 @@
 collection @medias, :object_root => :media
-attributes :id, :source, :parent_id
+attributes :id, :location, :parent_id

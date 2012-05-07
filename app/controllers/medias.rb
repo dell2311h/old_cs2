@@ -22,15 +22,4 @@ Pandrino.controllers :medias do
     render 'medias/show'
   end
 
-  post :encode, :map => "/medias/:id/encode" do
-    encoder = Encoder.new(params[:encoder])
-    if encoder.save
-      Resque.enqueue(Conveyor, encoder.id)
-      res = {:status => 'processing', :message => 'Your request was added to processing.'}
-    else
-      res = {:status => 'failure', :message => "Wrong request! #{encoder.errors.full_messages.join(". ")}"}
-    end
-    render res
-  end
-
 end

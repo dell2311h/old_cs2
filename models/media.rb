@@ -4,14 +4,13 @@ class Media
 
   field :location,        :type => String, :default => ''
   field :origin_media_id, :type => String, :default => ''
-  field :command,         :type => String, :default => ''
   field :type,            :type => String, :default => 'origin'
 
   has_many :encoding_medias, :class_name => 'Media', :inverse_of => :origin_media
   belongs_to :origin_media, :class_name => 'Media', :inverse_of => :encoding_media
   embeds_one :meta_info
 
-  after_create :add_meta_info
+  #after_create :add_meta_info
 
   def demux(type)
     type == :video ? (key, ext = 'a','.mov') : (key, ext = 'v','.wav')
@@ -30,7 +29,7 @@ class Media
 private
 
   def add_meta_info
-    file = RVideo::Inspector.new(:file => self.source)
+    file = RVideo::Inspector.new(:file => self.location)
     meta_info = self.build_meta_info
     MetaInfo::FIELDS.each do |field|
       meta_info[field] = file.send(field)
