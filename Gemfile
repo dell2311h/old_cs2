@@ -18,6 +18,7 @@ gem 'rabl'
 gem 'yajl-ruby'
 gem 'rvideo', :git => 'git://github.com/applicaster/rvideo.git'
 gem 'resque'
+gem 'aws-s3'
 
 # Test requirements
 gem 'rspec', :group => "test"
