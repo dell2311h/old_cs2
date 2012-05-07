@@ -2,10 +2,10 @@ class Media
   include Mongoid::Document
   include Mongoid::Timestamps # adds created_at and updated_at fields
 
-  field :source, :type => String, :default => ''
+  field :location,        :type => String, :default => ''
   field :origin_media_id, :type => String, :default => ''
-  field :command, :type => String, :default => ''
-  field :type, :type => String, :default => 'origin'
+  field :command,         :type => String, :default => ''
+  field :type,            :type => String, :default => 'origin'
 
   has_many :encoding_medias, :class_name => 'Media', :inverse_of => :origin_media
   belongs_to :origin_media, :class_name => 'Media', :inverse_of => :encoding_media
