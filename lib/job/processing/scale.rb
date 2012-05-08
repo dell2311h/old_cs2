@@ -1,15 +1,14 @@
 class Job::Scale < Job::Processing
 
   def perform
-    new_file_path = "#{self.output_dir}/#{SecureRandom.uuid}.txt"
-    File.open(new_file_path, "a") do |new_file|
-      file_path = self.input_files_array[0]
-      File.open(file_path) do |file|
-        new_file.write file.read
-      end
-      new_file.write "\nScaled with options #{self.options}"
-    end
-    self.result_files = [new_file_path]
+    params = { :output_file => "#{self.output_dir}/#{SecureRandom.uuid}.mp4" }
+    raise 'Invalid size params' if self.options[:height].nil? || self.options[:width].nil?
+    height = self.options[:height]
+    width  = self.options[:width]
+    recipe = "ffmpeg -i $input_file$ -vf 'scale=iw*min(#{width}/iw\\,#{height}/ih):ih*min(#{width}/iw\\,#{height}/ih),pad=#{width}:#{height}:(#{width}-iw)/2:(#{height}-ih)/2' $output_file$"
+    transcoder = RVideo::Transcoder.new(self.input_files_array[0])
+    transcoder.execute(recipe, params)
+    self.result_files = [params[:output_file]]
   end
 
   def media_type
