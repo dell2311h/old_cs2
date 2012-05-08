@@ -6,7 +6,7 @@ class Encoder
   field :params, :type => Hash
   field :input_media_ids, :type => Array
   field :result_media_ids, :type => Array
-  has_one :profile
+  belongs_to :profile
 
   # You can define indexes on documents using the index macro:
   # index :field <, :unique => true>
@@ -15,4 +15,3 @@ class Encoder
   # key :field <, :another_field, :one_more ....>
 
 end
-

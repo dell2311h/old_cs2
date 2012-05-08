@@ -5,6 +5,7 @@ class Profile
   # field <name>, :type => <type>, :default => <value>
   field :name, :type => String
   embeds_many :commands
+  has_many :encoders
 
   # You can define indexes on documents using the index macro:
   # index :field <, :unique => true>

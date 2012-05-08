@@ -19,7 +19,7 @@ class Conveyor
 
       @@create_medias_for_jobs
       @@create_medias_for_jobs.each do |job|
-        @@new_medias << job.create_medias
+        @@new_medias << job.create_medias(encoding.params['destination'], encoding.input_media_ids.first)
         @@new_medias.flatten!
       end
 
