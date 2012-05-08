@@ -1,15 +1,22 @@
 class Job::Rotate < Job::Processing
 
-  def perform
-    new_file_path = "#{self.output_dir}/#{SecureRandom.uuid}.txt"
-    File.open(new_file_path, "a") do |new_file|
-      file_path = self.input_files_array[0]
-      File.open(file_path) do |file|
-        new_file.write file.read
-      end
-      new_file.write "\nRotated with options #{self.options}"
+  def perform    
+    params = { :output_file => "#{self.output_dir}/#{SecureRandom.uuid}.mp4" }
+
+    recipe = case self.options[:angle]
+      when 90
+        "ffmpeg -i $input_file$ -vf 'transpose=1' $output_file$"
+      when 180
+        'ffmpeg -i $input_file$ -vf "vflip, hflip" $output_file$'
+      when 270
+        "ffmpeg -i $input_file$ -vf 'transpose=2' $output_file$"
+      else
+        raise 'Invalid angle (only: 90, 180, 270)'
     end
-    self.result_files = [new_file_path]
+
+    transcoder = RVideo::Transcoder.new(self.input_files_array[0])
+    transcoder.execute(recipe, params)
+    self.result_files = [params[:output_file]]
   end
 
   def media_type
