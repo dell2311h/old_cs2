@@ -7,6 +7,10 @@ class Notification
   field :data, :type => Hash, :default => {}
   field :response, :type => String, :default => ''
 
+  belongs_to :encoder
+
+  after_create :add_to_queue
+
   def deliver
     request = Net::HTTP::Post.new(callback_url)
     url = URI.parse(URI.encode(callback_url))
@@ -19,5 +23,11 @@ class Notification
     self.status = 'delivered'
     save!
   end
+
+  private
+
+    def add_to_queue
+      Resque.enqueue(Notifier, id)
+    end
 
 end

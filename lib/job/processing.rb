@@ -21,7 +21,7 @@ class Job::Processing < Job::Base
       new_file_path = "#{destination}/#{self.media_type}#{extension}"
       ::AWS::S3::S3Object.store(new_file_path, open(file_path), Pandrino.aws_s3[:bucket])
       raise 'File was not uploaded to S3' unless ::AWS::S3::S3Object.exists? new_file_path, Pandrino.aws_s3[:bucket]
-      medias << Media.create(:type => self.media_type, :location => new_file_path, :origin_id => origin_id)
+      medias << Media.create(:type => self.media_type, :location => new_file_path, :origin_media_id => origin_id)
     end
     medias
   end

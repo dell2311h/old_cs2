@@ -25,6 +25,9 @@ class Conveyor
 
       encoding.result_media_ids = @@new_medias.map(&:id)
       encoding.save
+      encoding.notifications.create(
+                        :callback_url => "#{Pandrino.callback_url}/#{encoding.profile.name}",
+                        :data => {:status => 'ok'})
       # TODO delete tmpfiles
     end
 

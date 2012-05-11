@@ -16,7 +16,7 @@ gem 'mongoid'
 gem 'bson_ext', :require => "mongo"
 gem 'rabl'
 gem 'yajl-ruby'
-gem 'rvideo', :git => 'git://github.com/applicaster/rvideo.git'
+gem 'rvideo', :git => 'git://github.com/DKarp/rvideo.git'
 gem 'resque'
 gem 'aws-s3'
 
