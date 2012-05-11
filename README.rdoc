@@ -9,6 +9,10 @@
 == Getting Started
 
 1. Create your config/database.rb and config/apps.rb from samples.
+
+2. Generate default profiles
+       padrino rake profiles:create_default
+
 2. Start server
        padrino start
 

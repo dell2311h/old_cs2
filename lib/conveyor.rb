@@ -2,7 +2,8 @@ class Conveyor
   @queue = :conveyor
   @@jobs_results = {}
   @@create_medias_for_jobs = []
-  @@new_medias = []
+  @@update_medias_for_jobs = []
+  @@medias = []
 
   class << self
     def perform(encoding_id)
@@ -12,18 +13,20 @@ class Conveyor
       add_job_result :download, download.perform
 
       encoding.profile.commands.asc(:ordering_number).each do |command|
-        processing_job = initiate_job_by command, encoding
-        add_job_result command.ordering_number, processing_job.perform
+        processing_job = initiate_job_by(command, encoding)
+        add_job_result(command.ordering_number, processing_job.perform)
         @@create_medias_for_jobs << processing_job if command.create_media
+        @@update_medias_for_jobs << processing_job if command.update_media
       end
 
-      @@create_medias_for_jobs
       @@create_medias_for_jobs.each do |job|
-        @@new_medias << job.create_medias(encoding.params['destination'], encoding.input_media_ids.first)
-        @@new_medias.flatten!
+        @@medias << job.create_medias(encoding.params['destination'], encoding.input_media_ids.first)
       end
-
-      encoding.result_media_ids = @@new_medias.map(&:id)
+      @@update_medias_for_jobs.each do |job|
+        @@medias << job.update_media
+      end
+      @@medias.flatten!
+      encoding.result_media_ids = @@medias.map(&:id)
       encoding.save
       encoding.notifications.create(
                         :callback_url => "#{Pandrino.callback_url}/#{encoding.profile.name}",

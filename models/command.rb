@@ -7,6 +7,7 @@ class Command
   field :job_name, :type => String
   field :input_from_command_with_number, :type => Integer, :default => nil
   field :create_media, :type => Boolean, :default => :false
+  field :update_media, :type => Boolean, :default => :false
   embeds_many :options
   embedded_in :profile
 
@@ -18,4 +19,3 @@ class Command
   # You can create a composite key in mongoid to replace the default id using the key macro:
   # key :field <, :another_field, :one_more ....>
 end
-

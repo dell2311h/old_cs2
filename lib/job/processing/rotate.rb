@@ -1,9 +1,9 @@
 class Job::Rotate < Job::Processing
 
-  def perform    
+  def perform
     params = { :output_file => "#{self.output_dir}/#{SecureRandom.uuid}.mp4" }
 
-    recipe = case self.options[:angle]
+    recipe = case self.options[:angle].to_i
       when 90
         "ffmpeg -i $input_file$ -vf 'transpose=1' $output_file$"
       when 180
@@ -24,4 +24,3 @@ class Job::Rotate < Job::Processing
   end
 
 end
-

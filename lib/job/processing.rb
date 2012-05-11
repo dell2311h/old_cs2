@@ -26,6 +26,19 @@ class Job::Processing < Job::Base
     medias
   end
 
+  def update_media
+    media = Media.find(options[:media_id])
+    require 'aws/s3'
+    ::AWS::S3::Base.establish_connection!(
+      :access_key_id => Pandrino.aws_s3[:access_key_id],
+      :secret_access_key => Pandrino.aws_s3[:secret_access_key]
+    )
+    ::AWS::S3::S3Object.delete(media.location, Pandrino.aws_s3[:bucket])
+    ::AWS::S3::S3Object.store(media.location, open(self.result_files.first), Pandrino.aws_s3[:bucket])
+    raise 'File was not uploaded to S3' unless ::AWS::S3::S3Object.exists? media.location, Pandrino.aws_s3[:bucket]
+    media
+  end
+
   def perform
     raise "Not implemented"
   end
