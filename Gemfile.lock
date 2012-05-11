@@ -1,6 +1,6 @@
 GIT
-  remote: git://github.com/applicaster/rvideo.git
-  revision: a289d4dcd8fe393d2f980e2654b24fbbfaabbb47
+  remote: git://github.com/DKarp/rvideo.git
+  revision: ca0eb0f9ca340f8c7a3b7e04e42761fc2f230c7e
   specs:
     rvideo (0.9.6)
       activesupport

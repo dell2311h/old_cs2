@@ -45,6 +45,7 @@ class MetaInfo
             :fps,
             :framerate,
             :time_base,
-            :codec_time_base
+            :codec_time_base,
+            :creation_time
           ]
 end
