@@ -1,4 +1,4 @@
-class Job::Cut < Job::Processing
+class Job::AudioCut < Job::Processing
 
   def perform
 
