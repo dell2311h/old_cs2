@@ -5,7 +5,7 @@ class Job::Cut < Job::Processing
     self.result_files = []
 
     self.input_files_array.each_with_index do |input_file, index|
-      out_file = "#{self.output_dir}/#{SecureRandom.uuid}.mp4"
+      out_file = "#{self.output_dir}/#{SecureRandom.uuid}.wav"
       raise "Invalid options" if (options[index].nil? || !(options[index].is_a? Hash))
       start_time = options[index][:start_time]
       end_time = options[index][:end_time]
@@ -20,7 +20,7 @@ class Job::Cut < Job::Processing
   end
 
   def media_type
-    'video'
+    'audio'
   end
 
   private
