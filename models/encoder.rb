@@ -8,6 +8,7 @@ class Encoder
   field :result_media_ids, :type => Array
   belongs_to :profile
   has_many :notifications
+  field :attempts, :type => Integer, :default => 0
 
   # You can define indexes on documents using the index macro:
   # index :field <, :unique => true>
@@ -16,3 +17,4 @@ class Encoder
   # key :field <, :another_field, :one_more ....>
 
 end
+
