@@ -34,8 +34,9 @@ class Conveyor
 
       TempStorage.remove_tmpfiles_by_encoder! encoding_id # remove tmpfiles after conveyor finished
 
-    rescue
+    rescue Exception => e
       TempStorage.remove_tmpfiles_by_encoder! encoding_id
+      encoding.conveyor_errors << { occured_at: Time.now, description: e.message }
       encoding.update_attribute(:attempts, encoding.attempts + 1)
       Resque.enqueue(Conveyor, encoding.id) if encoding.attempts < Pandrino.encoding_max_attempts
     end
