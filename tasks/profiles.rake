@@ -29,5 +29,10 @@ namespace :profiles do
     scale_command.options.create :key => "height", :params_key_name => "height"
     scale_command.options.create :key => "width", :params_key_name => "width"
 
+    # Bitrate
+    bitrate = Profile.create :name => "bitrate"
+    bitrate_command = bitrate.commands.create :job_name => "bitrate", :ordering_number => 0, :create_media => true
+    bitrate_command.options.create :key => "media_id", :params_key_name => "media_id"
+    bitrate_command.options.create :key => "bitrate", :params_key_name => "bitrate"
   end
 end
