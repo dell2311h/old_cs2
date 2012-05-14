@@ -6,9 +6,8 @@ Pandrino.controllers :encoders do
   end
 
   post :create, :map => "/encoders" do
-    @profile = Profile.where(:name => params[:profile]).first
-    @encoder = Encoder.new(params[:encoder])
-    @encoder.profile = @profile
+    @profile = Profile.find(params[:profile_id])
+    @encoder = @profile.encoders.new(params[:encoder])
     if @encoder.save
       Resque.enqueue(Conveyor, @encoder.id)
       res = {:status => 'processing', :message => 'Your request was added to processing.'}
