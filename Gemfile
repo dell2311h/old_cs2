@@ -19,6 +19,7 @@ gem 'yajl-ruby'
 gem 'rvideo', :git => 'git://github.com/DKarp/rvideo.git'
 gem 'resque'
 gem 'aws-s3'
+gem 'unicorn'
 
 # Test requirements
 gem 'rspec', :group => "test"
