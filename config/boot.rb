@@ -11,6 +11,8 @@ Bundler.require(:default, PADRINO_ENV)
 # Enable resque's rake tasks
 require 'resque/tasks'
 
+Resque.redis.namespace = "resque:Encoding"
+
 ##
 # Enable devel logging
 #
@@ -31,3 +33,4 @@ Padrino.after_load do
 end
 
 Padrino.load!
+

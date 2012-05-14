@@ -31,7 +31,13 @@ class Conveyor
       encoding.notifications.create(
                         :callback_url => "#{Pandrino.callback_url}/#{encoding.profile.name}",
                         :data => {:status => 'ok'})
-      # TODO delete tmpfiles
+
+      TempStorage.remove_tmpfiles_by_encoder! encoding_id # remove tmpfiles after conveyor finished
+
+    rescue
+      TempStorage.remove_tmpfiles_by_encoder! encoding_id
+      encoding.update_attribute(:attempts, encoding.attempts + 1)
+      Resque.enqueue(Conveyor, encoding.id) if encoding.attempts < Pandrino.encoding_max_attempts
     end
 
     def add_job_result(job_number, result)
@@ -60,3 +66,4 @@ class Conveyor
   end
 
 end
+
