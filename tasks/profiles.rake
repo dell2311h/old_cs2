@@ -16,11 +16,18 @@ namespace :profiles do
     rotate_command.options.create :key => "media_id", :params_key_name => "media_id"
     rotate_command.options.create :key => "angle", :params_key_name => "angle"
 
+    # Frame rate
+    frame = Profile.create :name => "frame_rate"
+    frame_command = frame.commands.create :job_name => "frame_rate", :ordering_number => 0, :update_media => true
+    frame_command.options.create :key => "media_id", :params_key_name => "media_id"
+    frame_command.options.create :key => "framerate", :params_key_name => "framerate"
+
     # Scale
     scale = Profile.create :name => "scale"
     scale_command = scale.commands.create :job_name => "scale", :ordering_number => 0, :create_media => true
     scale_command.options.create :key => "media_id", :params_key_name => "media_id"
     scale_command.options.create :key => "height", :params_key_name => "height"
     scale_command.options.create :key => "width", :params_key_name => "width"
+
   end
 end
