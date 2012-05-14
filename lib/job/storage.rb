@@ -16,6 +16,10 @@ class TempStorage
     "#{self.encoding_dir_fullpath}/#{self.output_dir_name}" if output_dir_name
   end
 
+  def self.remove_tmpfiles_by_encoder! encoder_id
+    FileUtils.rm_rf("#{Pandrino.encoded_media_path}/#{encoder_id}")
+  end
+
   private
 
     def make_output_dir!
@@ -24,3 +28,4 @@ class TempStorage
       Dir.mkdir(self.output_dir_fullpath) unless File.directory? self.output_dir_fullpath if output_dir_name
     end
 end
+
