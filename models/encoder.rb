@@ -9,6 +9,7 @@ class Encoder
   belongs_to :profile
   has_many :notifications
   field :attempts, :type => Integer, :default => 0
+  field :conveyor_errors, :type => Array, :default => []
 
   # You can define indexes on documents using the index macro:
   # index :field <, :unique => true>
