@@ -1,4 +1,4 @@
-class Job::Cut < Job::Processing
+class Job::AudioCut < Job::Processing
 
   def perform
 
@@ -49,7 +49,6 @@ class Job::Cut < Job::Processing
     def cut input_file, output_file, start_time, duration
       params = { output_file: output_file }
       recipe = "ffmpeg -sameq -i $input_file$  -ss #{start_time} " + (duration.nil? ? "" : " -t #{duration} ") + "$output_file$"
-      p recipe
       transcoder = RVideo::Transcoder.new(input_file)
       transcoder.execute(recipe, params)
     end
