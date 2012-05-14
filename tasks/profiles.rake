@@ -15,5 +15,12 @@ namespace :profiles do
     rotate_command = rotate.commands.create :job_name => "rotate", :ordering_number => 0, :update_media => true
     rotate_command.options.create :key => "media_id", :params_key_name => "media_id"
     rotate_command.options.create :key => "angle", :params_key_name => "angle"
+
+    # Scale
+    scale = Profile.create :name => "scale"
+    scale_command = scale.commands.create :job_name => "scale", :ordering_number => 0, :create_media => true
+    scale_command.options.create :key => "media_id", :params_key_name => "media_id"
+    scale_command.options.create :key => "height", :params_key_name => "height"
+    scale_command.options.create :key => "width", :params_key_name => "width"
   end
 end
