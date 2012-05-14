@@ -35,7 +35,9 @@ Padrino.configure_apps do
         :secret_access_key => 'KEY',
         :bucket => 'bucket-name'
       }
+  set :encoding_max_attempts, 3 # Max attemts of retry encoding conveyor
 end
 
 # Mounts the core application for this project
 Padrino.mount("Pandrino").to('/')
+
