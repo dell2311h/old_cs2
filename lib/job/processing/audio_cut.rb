@@ -6,17 +6,19 @@ class Job::AudioCut < Job::Processing
 
     self.input_files_array.each_with_index do |input_file, index|
       out_file = "#{self.output_dir}/#{SecureRandom.uuid}.wav"
-      raise "Invalid options" if (options[index].nil? || !(options[index].is_a? Hash))
-      start_time = options[index][:start_time]
-      end_time = options[index][:end_time]
+      raise "cutting_timings key is not provided at options" unless options[:cutting_timings]
+      raise "Invalid options" if (options[:cutting_timings][index].nil? || !(options[:cutting_timings][index].is_a? Hash))
+      start_time = options[:cutting_timings][index]["start_time"]
+      end_time = options[:cutting_timings][index]["end_time"]
       raise "Invalid options" if start_time.nil? && end_time.nil?
 
       start, duration = calculate_timings start_time, end_time
       cut input_file, out_file, start, duration
 
-      self.result_files.push out_file
+      self.result_files << out_file
     end
 
+    self.result_files
   end
 
   def media_type
