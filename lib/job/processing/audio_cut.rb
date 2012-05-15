@@ -8,8 +8,8 @@ class Job::AudioCut < Job::Processing
       out_file = "#{self.output_dir}/#{SecureRandom.uuid}.wav"
       raise "cutting_timings key is not provided at options" unless options[:cutting_timings]
       raise "Invalid options" if (options[:cutting_timings][index].nil? || !(options[:cutting_timings][index].is_a? Hash))
-      start_time = options[:cutting_timings][index][:start_time]
-      end_time = options[:cutting_timings][index][:end_time]
+      start_time = options[:cutting_timings][index]["start_time"]
+      end_time = options[:cutting_timings][index]["end_time"]
       raise "Invalid options" if start_time.nil? && end_time.nil?
 
       start, duration = calculate_timings start_time, end_time
