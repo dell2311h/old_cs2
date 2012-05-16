@@ -32,7 +32,7 @@ class Conveyor
                         :callback_url => "#{Pandrino.callback_url}/#{encoding.profile.id}",
                         :data => {:status => 'ok',
                                   :input_media_ids => encoding.input_media_ids,
-                                  :medias => @@medias})
+                                  :medias => @@medias.map {|m| m.attributes }})
 
       TempStorage.remove_tmpfiles_by_encoder! encoding_id # remove tmpfiles after conveyor finished
 

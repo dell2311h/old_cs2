@@ -14,8 +14,7 @@ class Notification
   def deliver
     request = Net::HTTP::Post.new(callback_url)
     url = URI.parse(URI.encode(callback_url))
-    request.body = data.to_json
-    request.add_field "Content-Type", "application/json"
+    request.body = data.to_param
     response = Net::HTTP.new(url.host, url.port).start { |http|
       http.request(request)
     }
