@@ -20,7 +20,9 @@ class Notification
       http.request(request)
     }
     self.response = response.body
+    raise "Callback not accessible" unless response.code == '200'
     self.status = 'delivered'
+  ensure
     save!
   end
 
@@ -29,5 +31,4 @@ class Notification
     def add_to_queue
       Resque.enqueue(Notifier, id)
     end
-
 end

@@ -29,8 +29,10 @@ class Conveyor
       encoding.result_media_ids = @@medias.map(&:id)
       encoding.save
       encoding.notifications.create(
-                        :callback_url => "#{Pandrino.callback_url}/#{encoding.profile.name}",
-                        :data => {:status => 'ok'})
+                        :callback_url => "#{Pandrino.callback_url}/#{encoding.profile.id}",
+                        :data => {:status => 'ok',
+                                  :input_media_ids => encoding.input_media_ids,
+                                  :medias => @@medias})
 
       TempStorage.remove_tmpfiles_by_encoder! encoding_id # remove tmpfiles after conveyor finished
 
@@ -67,4 +69,3 @@ class Conveyor
   end
 
 end
-
