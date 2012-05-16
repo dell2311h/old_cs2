@@ -7,7 +7,7 @@ namespace :profiles do
 
     # Meta info
     meta_info = Profile.create :name => "meta_info"
-    meta_command = meta_info.commands.create :job_name => "meta_info", :ordering_number => 0
+    meta_command = meta_info.commands.create :job_name => "meta_info", :ordering_number => 0, :update_media => true
     meta_command.options.create :key => "media_id", :params_key_name => "media_id"
 
     # Rotate
@@ -42,4 +42,3 @@ namespace :profiles do
     audio_join_command = master_track.commands.create :job_name => "audio_join", :ordering_number => 1, :create_media => true
   end
 end
-
