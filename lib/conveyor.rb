@@ -31,6 +31,7 @@ class Conveyor
       encoding.notifications.create(
                         :callback_url => "#{Pandrino.callback_url}/#{encoding.profile.id}",
                         :data => {:status => 'ok',
+                                  :encoder_id => encoding.id,
                                   :input_media_ids => encoding.input_media_ids,
                                   :medias => @@medias.map {|m| m.attributes }})
 
