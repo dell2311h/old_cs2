@@ -44,7 +44,10 @@ namespace :profiles do
     audio_cut_command = master_track.commands.create :job_name => "audio_cut", :ordering_number => 0
     audio_cut_command.options.create :key => "cutting_timings", :params_key_name => "cutting_timings"
     audio_join_command = master_track.commands.create :job_name => "audio_join", :ordering_number => 1, :input_from_command_with_number => 0
-    audio_convert_command = master_track.commands.create :job_name => "audio_convert", :ordering_number => 2, :input_from_command_with_number => 1, :create_media => true
+
+    audio_normalize_command = master_track.commands.create :job_name => "audio_normalize", :ordering_number => 2, :input_from_command_with_number => 1
+
+    audio_convert_command = master_track.commands.create :job_name => "audio_convert", :ordering_number => 3, :input_from_command_with_number => 2, :create_media => true
     audio_convert_command.options.create :key => "destination", :params_key_name => "destination"
     audio_convert_command.options.create :key => "media_type", :value => "master_track"
     audio_convert_command.options.create :key => "format", :value => "mp3"
@@ -107,3 +110,4 @@ namespace :profiles do
 
   end
 end
+
