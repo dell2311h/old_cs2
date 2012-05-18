@@ -10,7 +10,7 @@ Pandrino.controllers :encoders do
     @encoder = @profile.encoders.new(params[:encoder])
     if @encoder.save
       Resque.enqueue(Conveyor, @encoder.id)
-      res = {:encoder_id => @encoder.id, :status => 'processing', :message => 'Your request was added to processing.'}
+      res = {:encoder_id => @encoder.id, :status => 'ok', :message => 'Your request was added to processing.'}
     else
       res = {:status => 'failure', :message => "Wrong request! #{@encoder.errors.full_messages.join(". ")}"}
     end
