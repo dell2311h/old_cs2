@@ -41,6 +41,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.17.2)
+    mini_exiftool (1.4.2)
     mongo (1.6.1)
       bson (~> 1.6.1)
     mongoid (2.4.6)
@@ -139,6 +140,7 @@ DEPENDENCIES
   bson_ext
   erubis (~> 2.7.0)
   less
+  mini_exiftool (~> 1.4.2)
   mongoid
   padrino (= 0.10.6)
   rabl

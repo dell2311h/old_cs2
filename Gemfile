@@ -19,6 +19,7 @@ gem 'rvideo', :git => 'git://github.com/DKarp/rvideo.git'
 gem 'resque'
 gem 'aws-s3'
 gem 'unicorn'
+gem "mini_exiftool", "~> 1.4.2"
 
 # Test requirements
 gem 'rspec', :group => "test"
