@@ -108,6 +108,14 @@ namespace :profiles do
     streaming_command13.options.create :key => "media_type", :value => "640x960_high"
     # end streaming profile
 
+
+    # Thumbnails
+    thumbnails = Profile.create :name => "thumbnails"
+    thumbnail_command = thumbnails.commands.create :job_name => "thumbnail", :ordering_number => 0, :create_media => true
+    thumbnail_command.options.create :key => "destination", :params_key_name => "destination"
+    thumbnail_command.options.create :key => "size", :value => "120x80"
+    thumbnail_command.options.create :key => "thumbnail_name", :value => "thumbnail_"
+
   end
 end
 
