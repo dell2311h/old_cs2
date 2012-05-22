@@ -16,15 +16,9 @@ class Job::Thumbnail < Job::Processing
   end
 
   def create_medias(origin_id = nil)
-    require 'aws/s3'
-    ::AWS::S3::Base.establish_connection!(
-      :access_key_id => Pandrino.aws_s3[:access_key_id],
-      :secret_access_key => Pandrino.aws_s3[:secret_access_key]
-    )
     self.result_files.each do |file_path|
-      new_file_path = "#{options[:destination]}/#{File.basename(file_path)}"
-      ::AWS::S3::S3Object.store(new_file_path, open(file_path), Pandrino.aws_s3[:bucket], :access => :public_read)
-      raise 'File was not uploaded to S3' unless ::AWS::S3::S3Object.exists? new_file_path, Pandrino.aws_s3[:bucket]
+      s3_path = "#{options[:destination]}/#{File.basename(file_path)}"
+      upload_file_to_S3(file_path, s3_path)
     end
     Media.create(:type => self.get_media_type, :location => options[:destination], :origin_media_id => origin_id)
   end
