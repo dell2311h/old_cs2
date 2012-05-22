@@ -49,4 +49,17 @@ class Job::Processing < Job::Base
   def get_media_type
     options[:media_type] || media_type
   end
+
+  private
+
+    def upload_file_to_S3(file_path, s3_path)
+      require 'aws/s3'
+      ::AWS::S3::Base.establish_connection!(
+        :access_key_id => Pandrino.aws_s3[:access_key_id],
+        :secret_access_key => Pandrino.aws_s3[:secret_access_key]
+      )
+      ::AWS::S3::S3Object.store(s3_path, open(file_path), Pandrino.aws_s3[:bucket], :access => :public_read)
+      raise 'File was not uploaded to S3' unless ::AWS::S3::S3Object.exists? s3_path, Pandrino.aws_s3[:bucket]
+    end
 end
+
