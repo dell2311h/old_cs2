@@ -17,5 +17,15 @@ class Encoder
   # You can create a composite key in mongoid to replace the default id using the key macro:
   # key :field <, :another_field, :one_more ....>
 
+  def retry_encoding_which_was_interrupted_by(error)
+    self.conveyor_errors << { occured_at: Time.now, description: error.message }
+    self.update_attribute(:attempts, self.attempts + 1)
+    if self.attempts < Pandrino.encoding_max_attempts
+      Resque.enqueue(Conveyor, self.id)
+    else
+      raise error
+    end
+  end
+
 end
 
