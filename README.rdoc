@@ -16,9 +16,9 @@
 2. Start server
        padrino start
 
-3. Start resque worker:
-       QUEUE=* padrino rake resque:work
+3. Start(restart, stop) resque worker:
+       padrino rake resque:start (restart, stop)
 
 4. For start queues interface:
-       resque-web
+       resque-web -N "resque:Encoding"
 5. Look at http://localhost:5678/ work with queues
