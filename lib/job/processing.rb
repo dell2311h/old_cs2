@@ -11,15 +11,10 @@ class Job::Processing < Job::Base
 
   def create_medias(origin_id = nil)
     medias = []
-    require 'aws/s3'
-    ::AWS::S3::Base.establish_connection!(
-      :access_key_id => Pandrino.aws_s3[:access_key_id],
-      :secret_access_key => Pandrino.aws_s3[:secret_access_key]
-    )
     self.result_files.each do |file_path|
       new_file_path = options[:destination]
-      ::AWS::S3::S3Object.store(new_file_path, open(file_path), Pandrino.aws_s3[:bucket], :access => :public_read)
-      raise 'File was not uploaded to S3' unless ::AWS::S3::S3Object.exists? new_file_path, Pandrino.aws_s3[:bucket]
+      PANDRINO_STORAGE.upload file_path, new_file_path
+      raise "File was not uploaded to location'#{new_file_path}'" unless PANDRINO_STORAGE.file_exist? new_file_path
       medias << Media.create(:type => self.get_media_type, :location => new_file_path, :origin_media_id => origin_id)
     end
     medias
@@ -27,14 +22,8 @@ class Job::Processing < Job::Base
 
   def update_media
     media = Media.find(options[:media_id])
-    require 'aws/s3'
-    ::AWS::S3::Base.establish_connection!(
-      :access_key_id => Pandrino.aws_s3[:access_key_id],
-      :secret_access_key => Pandrino.aws_s3[:secret_access_key]
-    )
-    ::AWS::S3::S3Object.delete(media.location, Pandrino.aws_s3[:bucket])
-    ::AWS::S3::S3Object.store(media.location, open(self.result_files.first), Pandrino.aws_s3[:bucket])
-    raise 'File was not uploaded to S3' unless ::AWS::S3::S3Object.exists? media.location, Pandrino.aws_s3[:bucket]
+    PANDRINO_STORAGE.update self.result_files.first, media.location
+    raise "File was not updated with location'#{media.location}'" unless PANDRINO_STORAGE.file_exist? media.location
     media
   end
 
@@ -50,16 +39,4 @@ class Job::Processing < Job::Base
     options[:media_type] || media_type
   end
 
-  private
-
-    def upload_file_to_S3(file_path, s3_path)
-      require 'aws/s3'
-      ::AWS::S3::Base.establish_connection!(
-        :access_key_id => Pandrino.aws_s3[:access_key_id],
-        :secret_access_key => Pandrino.aws_s3[:secret_access_key]
-      )
-      ::AWS::S3::S3Object.store(s3_path, open(file_path), Pandrino.aws_s3[:bucket], :access => :public_read)
-      raise 'File was not uploaded to S3' unless ::AWS::S3::S3Object.exists? s3_path, Pandrino.aws_s3[:bucket]
-    end
 end
-

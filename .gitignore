@@ -1,5 +1,6 @@
 config/database.rb
 config/apps.rb
+config/boot.rb
 *.komodoproject
 
 .DS_Store

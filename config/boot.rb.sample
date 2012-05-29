@@ -13,12 +13,14 @@ require 'resque/tasks'
 
 Resque.redis.namespace = "resque:Encoding"
 
+
+
 ##
 # Enable devel logging
 #
-# Padrino::Logger::Config[:development][:log_level]  = :devel
-# Padrino::Logger::Config[:development][:log_static] = true
-#
+#  Padrino::Logger::Config[:development][:stream] = :to_file
+#  Padrino::Logger::Config[:development][:log_level]  = :devel
+#  Padrino::Logger::Config[:development][:log_static] = true
 
 ##
 # Add your before load hooks here
@@ -30,7 +32,8 @@ end
 # Add your after load hooks here
 #
 Padrino.after_load do
+  # Sorage for save encoded files (see config/apps.rb for more storage options)
+  PANDRINO_STORAGE = Storage::Factory.initialize_storage(:local)
 end
-Padrino::Logger::Config[:development][:stream] = :to_file
-Padrino.load!
 
+Padrino.load!

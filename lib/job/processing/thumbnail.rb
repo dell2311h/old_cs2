@@ -17,8 +17,8 @@ class Job::Thumbnail < Job::Processing
 
   def create_medias(origin_id = nil)
     self.result_files.each do |file_path|
-      s3_path = "#{options[:destination]}/#{File.basename(file_path)}"
-      upload_file_to_S3(file_path, s3_path)
+      new_file_path = "#{options[:destination]}/#{File.basename(file_path)}"
+      PANDRINO_STORAGE.upload file_path, new_file_path
     end
     Media.create(:type => self.get_media_type, :location => options[:destination], :origin_media_id => origin_id)
   end
@@ -32,4 +32,3 @@ class Job::Thumbnail < Job::Processing
     end
 
 end
-
