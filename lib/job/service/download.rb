@@ -11,7 +11,7 @@ class Job::Download < Job::Base
 
   def perform
     output_files_array = []
-    media_ids.each do |media_id|
+    @media_ids.each do |media_id|
       media = Media.find(media_id)
       location = media.location
       storage = media.origin_media_id.nil? ? Storage::Factory.initialize_storage(:aws_s3) : PANDRINO_STORAGE
