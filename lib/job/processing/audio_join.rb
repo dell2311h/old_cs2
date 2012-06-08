@@ -7,7 +7,7 @@ class Job::AudioJoin < Job::Processing
 
    recipe = "sox " + files + " " + out_file
    raise 'Failed to join files' unless system recipe
-
+   log("Join audio #{files} and save to #{out_file}")
    self.result_files = [out_file]
   end
 
@@ -16,4 +16,3 @@ class Job::AudioJoin < Job::Processing
   end
 
 end
-

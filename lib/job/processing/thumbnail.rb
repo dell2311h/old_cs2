@@ -4,6 +4,7 @@ class Job::Thumbnail < Job::Processing
     results = []
     input_file = self.input_files_array[0]
     thumbnail input_file, self.output_dir, options[:size]
+    log("Create thumbnails from '#{input_file}' to '#{self.output_dir}'")
     self.result_files = Dir.glob("#{self.output_dir}/#{self.file_name_template}*.*")
   end
 

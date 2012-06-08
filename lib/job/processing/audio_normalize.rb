@@ -13,7 +13,7 @@ class Job::AudioNormalize < Job::Processing
 
    recipe = "normalize-audio " + result_files.join(" ")
    raise 'Failed to normalize files' unless system recipe
-
+   log("Normalize audio for #{self.input_files_array.join(", ")} and save to #{result_files.join(", ")}")
    self.result_files = result_files
   end
 
@@ -22,4 +22,3 @@ class Job::AudioNormalize < Job::Processing
   end
 
 end
-

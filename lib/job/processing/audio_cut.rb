@@ -14,7 +14,7 @@ class Job::AudioCut < Job::Processing
 
       start, duration = calculate_timings start_time, end_time
       cut input_file, out_file, start, duration
-
+      log("Cut audio #{input_file} from #{start} till #{end_time} and save to #{out_file}")
       self.result_files << out_file
     end
 
@@ -56,4 +56,3 @@ class Job::AudioCut < Job::Processing
     end
 
 end
-

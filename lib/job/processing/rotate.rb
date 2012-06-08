@@ -16,6 +16,7 @@ class Job::Rotate < Job::Processing
 
     transcoder = RVideo::Transcoder.new(self.input_files_array[0])
     transcoder.execute(recipe, params)
+    log("Rotate video '#{self.input_files_array[0]}' with angle #{self.options[:angle].to_i} to #{params[:output_file]}")
     self.result_files = [params[:output_file]]
   end
 

@@ -5,9 +5,13 @@ class Conveyor
   @@update_medias_for_jobs = []
   @@medias = []
 
+
   class << self
     def perform(encoding_id)
+      log("/n/n/n")
+      log("START PROCESS ENCODER #{encoding_id}")
       encoding = Encoder.find encoding_id
+      log("Find encoder #{encoding.id}")
       storage = TempStorage.new encoding_id, "downloads"
       download = Job::Download.new storage.output_dir_fullpath, encoding.input_media_ids
       add_job_result :download, download.perform
@@ -36,8 +40,9 @@ class Conveyor
                                   :medias => @@medias.map {|m| m.attributes }})
 
       TempStorage.remove_tmpfiles_by_encoder! encoding_id # remove tmpfiles after conveyor finished
-
+      log("ENCODER #{encoding_id} SUCCESSFULLY FINISHED")
     rescue Exception => error
+      log("ENCODER #{encoding_id} FINISHED WITH ERROR")
       TempStorage.remove_tmpfiles_by_encoder! encoding_id
       encoding.retry_encoding_which_was_interrupted_by(error)
     end
@@ -65,7 +70,12 @@ class Conveyor
       storage = TempStorage.new encoding.id, command.ordering_number
       job_klass.new set_input_data_for(command), storage.output_dir_fullpath, prepare_options_for(command, encoding.params)
     end
+
+    def log(message, severity = :info)
+      logfile = File.join(Padrino.root, '/log/', "conveyor.log")
+      @log ||= ActiveSupport::BufferedLogger.new(logfile)
+      @log.send severity, "[#{Time.now.to_s(:db)}] [#{severity.to_s.capitalize}] #{message}\n"
+    end
   end
 
 end
-

@@ -15,7 +15,9 @@ class Job::Processing < Job::Base
       new_file_path = options[:destination]
       PANDRINO_STORAGE.upload file_path, new_file_path
       raise "File was not uploaded to location'#{new_file_path}'" unless PANDRINO_STORAGE.file_exist? new_file_path
-      medias << Media.create(:type => self.get_media_type, :location => new_file_path, :origin_media_id => origin_id)
+      media = Media.create(:type => self.get_media_type, :location => new_file_path, :origin_media_id => origin_id)
+      medias << media
+      log("Create media #{media.id} with type: #{self.get_media_type}, location: #{new_file_path}, origin_media_id: #{origin_id}")
     end
     medias
   end
@@ -24,6 +26,7 @@ class Job::Processing < Job::Base
     media = Media.find(options[:media_id])
     PANDRINO_STORAGE.update self.result_files.first, media.location
     raise "File was not updated with location'#{media.location}'" unless PANDRINO_STORAGE.file_exist? media.location
+    log("Update location media #{media.id} from #{self.result_files.first} to #{media.location}")
     media
   end
 

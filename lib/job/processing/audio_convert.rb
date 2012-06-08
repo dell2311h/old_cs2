@@ -12,7 +12,7 @@ class Job::AudioConvert < Job::Processing
 
     transcoder = RVideo::Transcoder.new(input_file)
     transcoder.execute(recipe, params)
-
+    log("Convert audio from #{input_file} to #{output_file}")
     self.result_files = [output_file]
   end
 
@@ -21,4 +21,3 @@ class Job::AudioConvert < Job::Processing
   end
 
 end
-

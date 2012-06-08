@@ -13,5 +13,10 @@ class Job::Base
     raise 'Not inmplemeted'
   end
 
-end
+  def log(message, severity = :info)
+    logfile = File.join(Padrino.root, '/log/', "conveyor.log")
+    @log ||= ActiveSupport::BufferedLogger.new(logfile)
+    @log.send severity, "[#{Time.now.to_s(:db)}] [#{severity.to_s.capitalize}] #{message}\n"
+  end
 
+end

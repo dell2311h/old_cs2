@@ -9,6 +9,8 @@ class Job::MetaInfo < Job::Processing
       meta_info[field] = file.send(field)
     end
     meta_info.save
+    log("Get meta_info for video '#{self.input_files_array[0]}'")
+    log("MEta Info: #{meta_info.inspect}")
     self.result_files = [self.input_files_array[0]]
   end
 
