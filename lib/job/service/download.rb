@@ -12,7 +12,7 @@ class Job::Download < Job::Base
   def perform
     output_files_array = []
     log("Start download medias: #{media_ids.inspect}")
-    media_ids.each do |media_id|
+    @media_ids.each do |media_id|
       media = Media.find(media_id)
       location = media.location
       storage = PANDRINO_STORAGE
