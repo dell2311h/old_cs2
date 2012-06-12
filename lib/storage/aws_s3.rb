@@ -33,5 +33,9 @@ module Storage
     def file_exist?(location)
       ::AWS::S3::S3Object.exists? location, @params[:bucket]
     end
+
+    def full_path(location, origin = false)
+      location
+    end
   end
 end

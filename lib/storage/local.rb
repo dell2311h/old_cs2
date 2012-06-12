@@ -1,7 +1,7 @@
 module Storage
   class Local < Storage::Base
     def download(location, destination)
-      copy("#{@params[:base_path]}/#{location}", destination)
+      copy(location, destination)
     end
 
     def upload(location, destination)
@@ -9,16 +9,19 @@ module Storage
     end
 
     def delete(location)
-      File.delete("#{@params[:base_path]}/#{location}")
+      File.delete(location)
     end
 
     def update(location, destination)
-      delete(destination)
       copy(location, destination)
     end
 
     def file_exist?(location)
-      File.exist?("#{@params[:base_path]}/#{location}")
+      File.exist?(location)
+    end
+
+    def full_path(location, origin = false)
+      origin ? "#{@params[:uploaded_path]}/#{location}" : "#{@params[:base_path]}/#{location}"
     end
 
     private

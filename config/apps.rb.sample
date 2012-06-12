@@ -32,7 +32,8 @@ Padrino.configure_apps do
   set :callback_url, 'http://localhost:3000'
   set :storages => {
         :local => {
-          :base_path => '/path/to/encoded/media/directory'
+          :base_path => '/path/to/encoded/media/directory',
+          :uploaded_path => '/path/to/uploaded/origin_media/directory'
         },
         :aws_s3 => {
           :access_key_id => 'KEY',
