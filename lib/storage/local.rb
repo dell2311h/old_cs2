@@ -5,7 +5,7 @@ module Storage
     end
 
     def upload(location, destination)
-      copy(location, "#{@params[:base_path]}/#{destination}")
+      copy(location, destination)
     end
 
     def delete(location)
