@@ -18,7 +18,7 @@ class Job::Thumbnail < Job::Processing
 
   def create_medias(origin_id = nil)
     self.result_files.each do |file_path|
-      new_file_path = "#{options[:destination]}/#{File.basename(file_path)}"
+      new_file_path = "#{PANDRINO_STORAGE.full_path(options[:destination])}/#{File.basename(file_path)}"
       PANDRINO_STORAGE.upload file_path, new_file_path
     end
     Media.create(:type => self.get_media_type, :location => options[:destination], :origin_media_id => origin_id)
