@@ -20,6 +20,7 @@ gem 'resque'
 gem 'aws-s3'
 gem 'unicorn'
 gem "mini_exiftool", "~> 1.4.2"
+gem "god"
 
 # Test requirements
 gem 'rspec', :group => "test"
