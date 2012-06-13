@@ -7,11 +7,8 @@ class Job::AudioConvert < Job::Processing
 
     output_file = "#{self.output_dir}/#{SecureRandom.uuid}.#{options[:format]}"
 
-    recipe = "ffmpeg -i #{input_file} #{output_file}"
-    params = { output_file: output_file }
-
-    transcoder = RVideo::Transcoder.new(input_file)
-    transcoder.execute(recipe, params)
+    recipe = "lame #{input_file} #{output_file}"
+    raise 'Failed to convert file' unless system recipe
     log("Convert audio from #{input_file} to #{output_file}")
     self.result_files = [output_file]
   end
