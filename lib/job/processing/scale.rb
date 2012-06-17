@@ -5,7 +5,8 @@ class Job::Scale < Job::Processing
     raise 'Invalid size params' if self.options[:height].nil? || self.options[:width].nil?
     height = self.options[:height]
     width  = self.options[:width]
-    recipe = "ffmpeg -i $input_file$ -vf 'scale=iw*min(#{width}/iw\\,#{height}/ih):ih*min(#{width}/iw\\,#{height}/ih),pad=#{width}:#{height}:(#{width}-iw)/2:(#{height}-ih)/2' $output_file$"
+    ratio = width.to_f/height.to_f
+    recipe = "ffmpeg -i $input_file$ -aspect #{ratio} -vf 'scale=iw*min(#{width}/iw\\,#{height}/ih):ih*min(#{width}/iw\\,#{height}/ih),pad=#{width}:#{height}:(#{width}-iw)/2:(#{height}-ih)/2' $output_file$"
     transcoder = RVideo::Transcoder.new(self.input_files_array[0])
     transcoder.execute(recipe, params)
     log("Scale video '#{self.input_files_array[0]}' with size #{width}x#{height} to #{params[:output_file]}")
