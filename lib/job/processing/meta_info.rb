@@ -14,7 +14,7 @@ class Job::MetaInfo < Job::Processing
     self.result_files = [self.input_files_array[0]]
   end
 
-  def update_media
+  def update_media(server_type)
     Media.find(options[:media_id])
   end
 

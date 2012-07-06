@@ -14,7 +14,7 @@ class Conveyor
       log("Find encoder #{encoding.id}")
       storage = TempStorage.new encoding_id, "downloads"
       download = Job::Download.new storage.output_dir_fullpath, encoding.input_media_ids
-      add_job_result :download, download.perform
+      add_job_result :download, download.perform(encoding.server_type)
 
       encoding.profile.commands.asc(:ordering_number).each do |command|
         processing_job = initiate_job_by(command, encoding)
@@ -24,10 +24,10 @@ class Conveyor
       end
 
       @@create_medias_for_jobs.each do |job|
-        @@medias << job.create_medias(encoding.input_media_ids.first)
+        @@medias << job.create_medias(encoding.input_media_ids.first, encoding.server_type)
       end
       @@update_medias_for_jobs.each do |job|
-        @@medias << job.update_media
+        @@medias << job.update_media(encoding.server_type)
       end
       @@medias.flatten!
       encoding.result_media_ids = @@medias.map(&:id)

@@ -20,8 +20,8 @@ module Storage
       File.exist?(location)
     end
 
-    def full_path(location, origin = false)
-      origin ? "#{@params[:uploaded_path]}/#{location}" : "#{@params[:base_path]}/#{location}"
+    def full_path(location, server_type)
+      "#{@params[:base_path]}/#{server_type}/#{location}"
     end
 
     private

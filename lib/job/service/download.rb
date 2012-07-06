@@ -9,13 +9,13 @@ class Job::Download < Job::Base
     @media_ids = media_ids
   end
 
-  def perform
+  def perform(server_type)
     output_files_array = []
     log("Start download medias: #{media_ids.inspect}")
     @media_ids.each do |media_id|
       media = Media.find(media_id)
       storage = PANDRINO_STORAGE
-      location = storage.full_path(media.location, media.origin_media_id.nil?)
+      location = storage.full_path(media.location, server_type)
       new_file_path = "#{self.output_dir}/#{SecureRandom.uuid}#{File.extname(location)}"
       log("Download media [#{media.id}] from '#{location}' to '#{new_file_path}'")
       raise "File not exists in location: '#{location}'" unless storage.file_exist? location

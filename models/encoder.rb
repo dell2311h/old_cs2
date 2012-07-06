@@ -9,6 +9,7 @@ class Encoder
   field :attempts,         :type => Integer, :default => 0
   field :conveyor_errors,  :type => Array,   :default => []
   field :callback_url,     :type => String,  :default => ''
+  field :server_type,      :type => String,  :default => ''
   belongs_to :profile
   has_many :notifications
 
